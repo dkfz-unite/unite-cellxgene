@@ -2,8 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 
 import * as globals from "../../globals";
-import Logo from "../framework/logo";
-import Truncate from "../util/truncate";
+// import Logo from "../framework/logo";
+// import Truncate from "../util/truncate";
 import InformationMenu from "./infoMenu";
 
 const DATASET_TITLE_FONT_SIZE = 14;
@@ -25,13 +25,13 @@ const DATASET_TITLE_FONT_SIZE = 14;
 class LeftSideBar extends React.Component {
   render() {
     const {
-      datasetTitle,
+      // datasetTitle,
       libraryVersions,
       aboutLink,
       privacyURL,
       tosURL,
       dispatch,
-      title,
+      // title,
     } = this.props;
 
     return (
@@ -48,7 +48,7 @@ class LeftSideBar extends React.Component {
         }}
       >
         <div>
-          <Logo size={28} />
+          {/* <Logo size={28} /> */}
           <span
             style={{
               fontSize: 24,
@@ -82,11 +82,11 @@ class LeftSideBar extends React.Component {
               padding: "5px 10px",
             }}
           >
-            <Truncate>
+            {/* <Truncate>
               <span style={{ maxWidth: 155 }} data-testid="header">
                 {title ?? datasetTitle}
               </span>
-            </Truncate>
+            </Truncate> */}
           </span>
           <InformationMenu
             {...{

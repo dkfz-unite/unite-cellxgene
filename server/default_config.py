@@ -11,6 +11,7 @@ server:
     force_https: false
     flask_secret_key: null
     generate_cache_control_headers: false
+    url_prefix: null
 
   single_dataset:
     # If datapath is set, then cellxgene with serve a single dataset located at datapath.
