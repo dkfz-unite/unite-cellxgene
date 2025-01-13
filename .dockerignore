@@ -1,5 +1,10 @@
+.github
+client/node_modules
 bin
-client
+build
 dist
 docs
-server
+dev_docs
+example-dataset
+tests
+venv

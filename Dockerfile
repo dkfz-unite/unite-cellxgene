@@ -1,11 +1,26 @@
-FROM ubuntu:bionic
+FROM python:3.10-slim AS base
+ENV URL_PREFIX=""
+ENV FILE_PATH=""
+EXPOSE 80
+EXPOSE 443
 
-ENV LC_ALL=C.UTF-8
-ENV LANG=C.UTF-8
+FROM python:3.10-slim AS install
+RUN apt-get update
+RUN apt-get install -y build-essential make jq nodejs npm
+RUN apt-get clean
 
-RUN apt-get update && \
-    apt-get install -y build-essential libxml2-dev python3-dev python3-pip zlib1g-dev python3-requests python3-aiohttp && \
-    python3 -m pip install --upgrade pip && \
-    pip3 install cellxgene
+FROM install AS build
+WORKDIR /app
+COPY . .
+RUN pip install wheel
+RUN pip install -r requirements.txt
+RUN make build-for-server-dev
+RUN python ./setup.py bdist_wheel
 
-ENTRYPOINT ["cellxgene"]
+FROM base AS runtime
+WORKDIR /app
+COPY --from=build /app/dist/*.whl .
+RUN pip install --no-cache-dir wheel
+RUN pip install --no-cache-dir *.whl
+CMD cellxgene launch --backed --disable-diffexp --disable-annotations --host 0.0.0.0 --port 80 --url-prefix ${URL_PREFIX} /app/data/${FILE_PATH}
+# docker run -v ~/mnt/analysis:/app/data -p 5005:80 -e URL_PREFIX="/cxg" -e FILE_PATH="data.h5ad" cellxgene
