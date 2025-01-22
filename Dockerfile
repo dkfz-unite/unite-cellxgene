@@ -22,5 +22,6 @@ WORKDIR /app
 COPY --from=build /app/dist/*.whl .
 RUN pip install --no-cache-dir wheel
 RUN pip install --no-cache-dir *.whl
-CMD cellxgene launch --backed --disable-diffexp --disable-annotations --host 0.0.0.0 --port 80 --url-prefix ${URL_PREFIX} /app/data/${FILE_PATH}
+CMD cellxgene launch --disable-annotations --host 0.0.0.0 --port 80 --url-prefix ${URL_PREFIX} /app/data/${FILE_PATH}
+# CMD cellxgene launch --backed --disable-diffexp --disable-annotations --host 0.0.0.0 --port 80 --url-prefix ${URL_PREFIX} /app/data/${FILE_PATH}
 # docker run -v ~/mnt/analysis:/app/data -p 5005:80 -e URL_PREFIX="/cxg" -e FILE_PATH="data.h5ad" cellxgene
